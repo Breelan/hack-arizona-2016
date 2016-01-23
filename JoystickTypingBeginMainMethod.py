@@ -17,7 +17,7 @@ def main() :
 	XYcoordSTR = serPort.readline()		  # This code segment reads and parses
 	XYcoord = XYcoordSTR.split(",")		  # joystick coordinates from the Arduino.
 	xDisp = int(XYcoord[0])				  # Will be needed in a few places throughout.
-	yDisp = int(XYcoord[1])			  	  #
+	yDisp = int(XYcoord[1]) 		  	  #
 	#######################################
 
 	while (isMovingJoystick( xDisp , yDisp ) == False) :
@@ -27,8 +27,14 @@ def main() :
 		xDisp = int(XYcoord[0])				  # Will be needed in a few places throughout.
 		yDisp = int(XYcoord[1])			  	  #
 		#######################################
+
 		if (isMovingJoystick( xDisp , yDisp ) == True):
-			pass
+			displacementValue(xDisp, yDisp)
+
+
+def letterPrinter() :
+	initalQuad = getQuadrant( xDisp , yDisp )
+	print initalQuad
 
 
 # This def will determine if the 
@@ -76,35 +82,54 @@ def getQuadrant( x , y ) :
 # If return > 0, move up the list to higher index element (rotate clockwise)
 # If return < 0, move down the list to lower index element (rotate counterclockwise)
 # If 0, joystick returned to origin (letter done)
-def moveThroughListDecider( x , y ) :
+def displacementValue( x , y ) :
 
 	listPlace = 0;
 	currentQuad = getQuadrant( x , y )
-	newQuad = getQuadrant( x , y )
+	newQuad = currentQuad
 
-	while (x != 0 and y != 0) :
+	print "Initial quadrant = " + currentQuad
 
+	while (currentQuad is 'A' or currentQuad is 'B' or currentQuad is 'C' or currentQuad is 'D') :
+
+		#######################################
+		XYcoordSTR = serPort.readline()		  # This code segment reads and parses
+		XYcoord = XYcoordSTR.split(",")		  # joystick coordinates from the Arduino.
+		x = int(XYcoord[0])				  # Will be needed in a few places throughout.
+		y = int(XYcoord[1])			  	  #
+		#######################################
 		newQuad = getQuadrant( x , y )
 
-		if currentQuad is 'B' :
+		if currentQuad is None or newQuad is None :
+			print ""
+		else : 
+			print "currentQuad = " + currentQuad
+			print "newQuad = " + newQuad
+			print listPlace
+
+
+		if currentQuad == newQuad :
+			listPlace += 0
+
+		elif currentQuad is 'B' :
 			if newQuad is 'A' :
 				listPlace -= 1
 			if newQuad is 'C' :
 				listPlace += 1
 
-		if currentQuad is 'D' :
+		elif currentQuad is 'D' :
 			if newQuad is 'C' :
 				listPlace -= 1
 			if newQuad is 'A' :
 				listPlace += 1
 
-		if currentQuad is 'A' :
+		elif currentQuad is 'A' :
 			if newQuad is 'D' :
 				listPlace -= 1
 			if newQuad is 'B' :
 				listPlace += 1
 
-		if currentQuad is 'C' :
+		elif currentQuad is 'C' :
 			if newQuad is 'B' :
 				listPlace -= 1
 			if newQuad is 'D' :
@@ -112,8 +137,8 @@ def moveThroughListDecider( x , y ) :
 
 		currentQuad = newQuad
 
-		return listPlace
-
+	print "End Loop"
+	return listPlace
 
 
 if __name__ == '__main__' : main()

@@ -29,12 +29,9 @@ def main() :
 		#######################################
 
 		if (isMovingJoystick( xDisp , yDisp ) == True):
+			print getQuadrant(xDisp, yDisp)
 			displacementValue(xDisp, yDisp)
 
-
-def letterPrinter() :
-	initalQuad = getQuadrant( xDisp , yDisp )
-	print initalQuad
 
 
 # This def will determine if the 

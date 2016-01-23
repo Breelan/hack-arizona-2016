@@ -114,6 +114,17 @@ def moveThroughListDecider( x , y ) :
 
 		return listPlace
 
+def letterSelect():
+	entryQuadrant = getQuadrant(x,y)
+	listDisplacement = moveThroughListDecider(x,y)
 
+	if entryQuadrant is 'B':
+		print quadB[4 + listDisplacement]
+	elif entryQuadrant is 'D':
+		print quadD[4 + listDisplacement]
+	elif entryQuadrant is 'A':
+		print quadA[4 + listDisplacement]
+	else:
+		print quadC[4 + listDisplacement]		
 
 if __name__ == '__main__' : main()

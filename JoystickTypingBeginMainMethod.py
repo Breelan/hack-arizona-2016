@@ -17,7 +17,7 @@ def main() :
 	XYcoordSTR = serPort.readline()		  # This code segment reads and parses
 	XYcoord = XYcoordSTR.split(",")		  # joystick coordinates from the Arduino.
 	xDisp = int(XYcoord[0])				  # Will be needed in a few places throughout.
-	yDisp = int(XYcoord[1]) 		  	  #
+	yDisp = int(XYcoord[1]) * -1	  	  #
 	#######################################
 
 	while (isMovingJoystick( xDisp , yDisp ) == False) :
@@ -25,12 +25,19 @@ def main() :
 		XYcoordSTR = serPort.readline()		  # This code segment reads and parses
 		XYcoord = XYcoordSTR.split(",")		  # joystick coordinates from the Arduino.
 		xDisp = int(XYcoord[0])				  # Will be needed in a few places throughout.
-		yDisp = int(XYcoord[1])			  	  #
+		yDisp = int(XYcoord[1])	* -1	  	  #
 		#######################################
 
 		if (isMovingJoystick( xDisp , yDisp ) == True):
-			print getQuadrant(xDisp, yDisp)
-			displacementValue(xDisp, yDisp)
+			init = getQuadrant(xDisp, yDisp)
+			letterSelect(init)
+
+		#######################################
+		XYcoordSTR = serPort.readline()		  # This code segment reads and parses
+		XYcoord = XYcoordSTR.split(",")		  # joystick coordinates from the Arduino.
+		xDisp = int(XYcoord[0])				  # Will be needed in a few places throughout.
+		yDisp = int(XYcoord[1])	* -1	  	  #
+		#######################################
 
 
 
@@ -92,8 +99,8 @@ def displacementValue( x , y ) :
 		#######################################
 		XYcoordSTR = serPort.readline()		  # This code segment reads and parses
 		XYcoord = XYcoordSTR.split(",")		  # joystick coordinates from the Arduino.
-		x = int(XYcoord[0])				  # Will be needed in a few places throughout.
-		y = int(XYcoord[1])			  	  #
+		x = int(XYcoord[0])				  	  # Will be needed in a few places throughout.
+		y = int(XYcoord[1])	* -1		  	  #
 		#######################################
 		newQuad = getQuadrant( x , y )
 
@@ -137,9 +144,11 @@ def displacementValue( x , y ) :
 	print "End Loop"
 	return listPlace
 
-def letterSelect():
-	entryQuadrant = getQuadrant(x,y)
-	listDisplacement = moveThroughListDecider(x,y)
+def letterSelect( initalArea ):
+	entryQuadrant = initalArea
+	print entryQuadrant
+
+	listDisplacement = displacementValue( xDisp , yDisp )
 
 	if entryQuadrant is 'B':
 		print quadB[4 + listDisplacement]
@@ -149,5 +158,8 @@ def letterSelect():
 		print quadA[4 + listDisplacement]
 	else:
 		print quadC[4 + listDisplacement]		
+
+
+
 
 if __name__ == '__main__' : main()

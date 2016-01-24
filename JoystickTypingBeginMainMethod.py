@@ -3,10 +3,10 @@ import serial
 serPort = serial.Serial('/dev/cu.usbmodem1421')  # open serial port
 
 
-quadA = ['G','F','E','A','B','C','D','0','1']
-quadB = ['N','M','L','H','I','J','K','2','3']
-quadC = ['U','T','S','O','P','Q','R','4','5']
-quadD = ['Z','V','W','X','Y','6','7','8','9']
+quadUp  =   ['X','Y','C','N','E','A','R','W','V']
+quadRight = ['Q','P','U','S',' ','O','D','F','K']
+quadDown =  ['Z','B','M','H','T','I','L','G','J']
+quadLeft =  ['-','-','-','-',chr(8),'-','-','-','-']
 
 xDisp = 7
 yDisp = -4
@@ -51,7 +51,7 @@ def isMovingJoystick( x , y ) :
 # from the joystick to the center.
 def getSlope( x , y ) :
 	if x == 0 :
-		return -123.0							# This line if for the special case x == 0 in which case return value in quadA and quadB
+		return -123.0							# This line if for the special case x == 0 in which case return value in quadUp and quadRight
 	return float(y) / float(x) 
 
 # This def will determine the 
@@ -136,13 +136,13 @@ def letterSelect( initalArea ):
 	listDisplacement = displacementValue( xDisp , yDisp, entryQuadrant )
 
 	if entryQuadrant is 'B':
-		print quadB[4 + listDisplacement],
+		print quadRight[4 + listDisplacement],
 	elif entryQuadrant is 'D':
-		print quadD[4 + listDisplacement],
+		print quadLeft[4 + listDisplacement],
 	elif entryQuadrant is 'A':
-		print quadA[4 + listDisplacement],
+		print quadUp[4 + listDisplacement],
 	else:
-		print quadC[4 + listDisplacement],	
+		print quadDown[4 + listDisplacement],	
 
 
 

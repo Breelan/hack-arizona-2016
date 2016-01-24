@@ -6,7 +6,7 @@ serPort = serial.Serial('/dev/cu.usbmodem1421')  # open serial port
 quadUp  =   ['X','Y','C','N','E','A','R','W','V']
 quadRight = ['Q','P','U','S',' ','O','D','F','K']
 quadDown =  ['Z','B','M','H','T','I','L','G','J']
-quadLeft =  ['-','-','-','-',chr(8),'-','-','-','-']
+quadLeft =  ['%','@','!','?',chr(8),'.',',','#','/']
 
 xDisp = 7
 yDisp = -4

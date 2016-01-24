@@ -1,4 +1,3 @@
-
 import serial
 serPort = serial.Serial('/dev/cu.usbmodem1421')  # open serial port
 
@@ -8,8 +7,11 @@ quadRight = ['Q','P','U','S',' ','O','D','F','K']
 quadDown =  ['Z','B','M','H','T','I','L','G','J']
 quadLeft =  ['%','@','!','?',chr(8),'.',',','#','/']
 
-xDisp = 7
-yDisp = -4
+xDisp = 0
+yDisp = 0
+
+
+global fullString
 
 def main() :
 
@@ -19,8 +21,7 @@ def main() :
 	xDisp = int(XYcoord[0])				  # Will be needed in a few places throughout.
 	yDisp = int(XYcoord[1]) * -1	  	  #
 	#######################################
-
-	fullString = ''
+	fullString = ""
 
 	while (isMovingJoystick( xDisp , yDisp ) == False) :
 		#######################################
@@ -31,8 +32,8 @@ def main() :
 		#######################################
 
 		if (isMovingJoystick( xDisp , yDisp ) == True):
-			init = getQuadrant(xDisp, yDisp)
-			letterSelect(init)
+			init = getQuadrant(xDisp , yDisp)
+			fullString = letterSelect(init , fullString)
 
 		xDisp = 0
 		yDisp = 0
@@ -76,7 +77,7 @@ def getQuadrant( x , y ) :
 		return 'A'
 
 	# If in quadrantC
-	elif y < 0 and (m > 1 or m < -1) :			# Could be removed
+	elif y < 0 and (m > 1 or m < -1) :		
 		return 'C'		
 
 # This def will return either a value between -4 and 4
@@ -133,29 +134,29 @@ def displacementValue( x , y, initalZone ) :
 
 	return listPlace
 
-def letterSelect( initalArea ):
+def letterSelect( initalArea , currStr ):
 	entryQuadrant = initalArea
 	listDisplacement = displacementValue( xDisp , yDisp, entryQuadrant )
 
 	if entryQuadrant is 'B':
-		# print quadRight[4 + listDisplacement],
-		fullString = fullString + quadRight[4 + listDisplacement]
+		print quadRight[4 + listDisplacement],
+		# currStr = currStr + quadRight[4 + listDisplacement]
 	elif entryQuadrant is 'D':
-		# print quadLeft[4 + listDisplacement],
-		if(listDisplacement == 0):
-			fullString = fullString[:-1]
-		else:
-			fullString = fullString + quadLeft[4 + listDisplacement]
+		print quadLeft[4 + listDisplacement],
+		# if(listDisplacement == 0):
+		# 	currStr = currStr[:-1]
+		# else:
+		# 	currStr = currStr + quadLeft[4 + listDisplacement]
 	elif entryQuadrant is 'A':
-		# print quadUp[4 + listDisplacement],
-		fullString = fullString + quadUp[4 + listDisplacement]
+		print quadUp[4 + listDisplacement],
+		# currStr = currStr + quadUp[4 + listDisplacement]
 	elif entryQuadrant is 'C':
-		# print quadDown[4 + listDisplacement],
-		fullString = fullString + quadDown[4 + listDisplacement]	
+		print quadDown[4 + listDisplacement],
+		# currStr = currStr + quadDown[4 + listDisplacement]	
 
-	# clear screen here - try \f or print(chr(27) + "[2J") or something more elegant
-	print('\n' * 25) # a quick hack for now
-	print(fullString)
+	# print('\n' * 5) # a quick hack for now
+	# print(currStr)
+	return currStr
 
 
 if __name__ == '__main__' : main()

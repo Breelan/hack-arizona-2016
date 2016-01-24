@@ -154,7 +154,7 @@ def letterSelect( initalArea ):
 		fullString = fullString + quadDown[4 + listDisplacement]	
 
 	# clear screen here - try \f or print(chr(27) + "[2J") or something more elegant
-	print('\n' * 25)
+	print('\n' * 25) # a quick hack for now
 	print(fullString)
 
 

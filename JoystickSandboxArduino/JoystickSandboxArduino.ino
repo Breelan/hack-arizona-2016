@@ -4,6 +4,7 @@ int joyPin2 = 1;                 // slider variable connecetd to analog pin 1
 int value1 = 0;                  // variable to read the value from the analog pin 0
 int value2 = 0;                  // variable to read the value from the analog pin 1
 
+//This is a comment
 void setup() {
   pinMode(digiPin, OUTPUT);              // initializes digital pins 0 to 7 as outputs
   Serial.begin(9600);

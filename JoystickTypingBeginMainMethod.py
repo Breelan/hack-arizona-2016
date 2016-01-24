@@ -20,6 +20,8 @@ def main() :
 	yDisp = int(XYcoord[1]) * -1	  	  #
 	#######################################
 
+	fullString = ''
+
 	while (isMovingJoystick( xDisp , yDisp ) == False) :
 		#######################################
 		XYcoordSTR = serPort.readline()		  # This code segment reads and parses
@@ -136,15 +138,24 @@ def letterSelect( initalArea ):
 	listDisplacement = displacementValue( xDisp , yDisp, entryQuadrant )
 
 	if entryQuadrant is 'B':
-		print quadRight[4 + listDisplacement],
+		# print quadRight[4 + listDisplacement],
+		fullString = fullString + quadRight[4 + listDisplacement]
 	elif entryQuadrant is 'D':
-		print quadLeft[4 + listDisplacement],
+		# print quadLeft[4 + listDisplacement],
+		if(listDisplacement == 0):
+			fullString = fullString[:-1]
+		else:
+			fullString = fullString + quadLeft[4 + listDisplacement]
 	elif entryQuadrant is 'A':
-		print quadUp[4 + listDisplacement],
-	else:
-		print quadDown[4 + listDisplacement],	
+		# print quadUp[4 + listDisplacement],
+		fullString = fullString + quadUp[4 + listDisplacement]
+	elif entryQuadrant is 'C':
+		# print quadDown[4 + listDisplacement],
+		fullString = fullString + quadDown[4 + listDisplacement]	
 
-
+	# clear screen here - try \f or print(chr(27) + "[2J") or something more elegant
+	print('\n' * 25)
+	print(fullString)
 
 
 if __name__ == '__main__' : main()

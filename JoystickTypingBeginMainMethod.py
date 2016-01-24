@@ -3,10 +3,10 @@ import serial
 serPort = serial.Serial('/dev/cu.usbmodem1421')  # open serial port
 
 
-quadA = ['g','f','e','a','b','c','d','0','1']
-quadB = ['n','m','l','h','i','j','k','2','3']
-quadC = ['u','t','s','o','p','q','r','4','5']
-quadD = ['z','v','w','x','y','6','7','8','9']
+quadA = ['G','F','E','A','B','C','D','0','1']
+quadB = ['N','M','L','H','I','J','K','2','3']
+quadC = ['U','T','S','O','P','Q','R','4','5']
+quadD = ['Z','V','W','X','Y','6','7','8','9']
 
 xDisp = 7
 yDisp = -4
@@ -32,13 +32,8 @@ def main() :
 			init = getQuadrant(xDisp, yDisp)
 			letterSelect(init)
 
-		#######################################
-		XYcoordSTR = serPort.readline()		  # This code segment reads and parses
-		XYcoord = XYcoordSTR.split(",")		  # joystick coordinates from the Arduino.
-		xDisp = int(XYcoord[0])				  # Will be needed in a few places throughout.
-		yDisp = int(XYcoord[1])	* -1	  	  #
-		#######################################
-
+		xDisp = 0
+		yDisp = 0
 
 
 # This def will determine if the 
@@ -86,13 +81,11 @@ def getQuadrant( x , y ) :
 # If return > 0, move up the list to higher index element (rotate clockwise)
 # If return < 0, move down the list to lower index element (rotate counterclockwise)
 # If 0, joystick returned to origin (letter done)
-def displacementValue( x , y ) :
+def displacementValue( x , y, initalZone ) :
 
 	listPlace = 0;
-	currentQuad = getQuadrant( x , y )
-	newQuad = currentQuad
-
-	print "Initial quadrant = " + currentQuad
+	currentQuad = initalZone
+	newQuad = initalZone
 
 	while (currentQuad is 'A' or currentQuad is 'B' or currentQuad is 'C' or currentQuad is 'D') :
 
@@ -105,12 +98,7 @@ def displacementValue( x , y ) :
 		newQuad = getQuadrant( x , y )
 
 		if currentQuad is None or newQuad is None :
-			print ""
-		else : 
-			print "currentQuad = " + currentQuad
-			print "newQuad = " + newQuad
-			print listPlace
-
+			doNothing = -1
 
 		if currentQuad == newQuad :
 			listPlace += 0
@@ -141,23 +129,20 @@ def displacementValue( x , y ) :
 
 		currentQuad = newQuad
 
-	print "End Loop"
 	return listPlace
 
 def letterSelect( initalArea ):
 	entryQuadrant = initalArea
-	print entryQuadrant
-
-	listDisplacement = displacementValue( xDisp , yDisp )
+	listDisplacement = displacementValue( xDisp , yDisp, entryQuadrant )
 
 	if entryQuadrant is 'B':
-		print quadB[4 + listDisplacement]
+		print quadB[4 + listDisplacement],
 	elif entryQuadrant is 'D':
-		print quadD[4 + listDisplacement]
+		print quadD[4 + listDisplacement],
 	elif entryQuadrant is 'A':
-		print quadA[4 + listDisplacement]
+		print quadA[4 + listDisplacement],
 	else:
-		print quadC[4 + listDisplacement]		
+		print quadC[4 + listDisplacement],	
 
 
 

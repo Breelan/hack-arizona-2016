@@ -5,7 +5,7 @@ serPort = serial.Serial('/dev/cu.usbmodem1421')  # open serial port
 quadUp  =   ['X','Y','C','N','E','A','R','W','V']
 quadRight = ['Q','P','U','S',' ','O','D','F','K']
 quadDown =  ['Z','B','M','H','T','I','L','G','J']
-quadLeft =  ['%','@','!','?',chr(8),'.',',','#','/']
+quadLeft =  ['%','@','!','?','del','.',',','#','/']
 
 xDisp = 0
 yDisp = 0
@@ -131,6 +131,12 @@ def displacementValue( x , y, initalZone ) :
 				listPlace += 1
 
 		currentQuad = newQuad
+
+	if listPlace > 4 :
+		listPlace = 4
+
+	if listPlace < -4 :
+		listPlace = -4
 
 	return listPlace
 
